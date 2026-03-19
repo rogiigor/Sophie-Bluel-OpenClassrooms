@@ -98,7 +98,9 @@ buttonHotelsNRestaurants.addEventListener("click", async function() {
     buttonObjects.classList.remove("clicked");
     buttonApartments.classList.remove("clicked");
     buttonHotelsNRestaurants.classList.add("clicked");
-})
+});
+
+ 
 
 
 
