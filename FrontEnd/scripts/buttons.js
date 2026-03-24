@@ -11,7 +11,7 @@ import { generateWorks } from "./works.js";
  * This function generates all all filters button plus button for all works
  * @param {array of Nodes} categories : categories of works
  */
-function generateButtons(categories) {
+function generateButtons(categories, works) {
     // Retrieve the DOM element that will host buttons
     const filtersSection = document.querySelector("section.filters");
 
@@ -22,7 +22,7 @@ function generateButtons(categories) {
     buttonAll.classList.add("clicked");
 
     filtersSection.appendChild(buttonAll);
-    addEvenetListenerToButton(filtersSection);
+    addEvenetListenerToFilterSection(filtersSection, works);
 
     for (let i = 0; i < categories.length; i++) {
         let btnCategory = categories[i].name;
@@ -33,7 +33,7 @@ function generateButtons(categories) {
         filterButton.textContent = btnCategory;
         filterButton.classList.add(classBtnCategory);
         filtersSection.appendChild(filterButton);
-        addEvenetListenerToButton(filtersSection);
+        addEvenetListenerToFilterSection(filtersSection, works);
     }
 }
 
@@ -59,98 +59,52 @@ function createClassNameFromCatheory(category) {
  */
 async function renderButtons() {
     // Retrieve category of works via HTTP request and convert it to JSON
-    const response = await fetch("http://localhost:5678/api/categories");
-    const categories = await response.json();
-    generateButtons(categories);
+    const categoriesResponse = await fetch("http://localhost:5678/api/categories");
+    const categories = await categoriesResponse.json();
+
+    // get all works
+    const worksResponse = await fetch("http://localhost:5678/api/works");
+    const works = await worksResponse.json();
+    generateButtons(categories, works);
 }
 
 /**
  * This function adds eveentListener to button
  * @param {Node} section: Node element for section that is parent of button
  */
-async function addEvenetListenerToButton(section) {
-    // get all works
-    const response = await fetch("http://localhost:5678/api/works");
-    const works = await response.json();
-    let filteredWorks = [...works];
-
+function addEvenetListenerToFilterSection(section, works) {
     section.addEventListener("click", async (event) => {
 
         if (event.target.nodeName === 'BUTTON') {
                 const category = event.target.textContent;
-                console.log(`Button ${category} was clicked.`)
+
+                let filteredWorks = [...works];
                 if (category != "All") {
                     filteredWorks = works.filter((work) => {
                         return work.category.name === category;
-                })
-            }
-            document.querySelector(".gallery").innerHTML = "";
-            generateWorks(filteredWorks);
+                    })
+                }
+                document.querySelector(".gallery").innerHTML = "";
+                generateWorks(filteredWorks);
+
+                // set clicked class to clicked button
+                setCickedClass(event);
         }
     })
 
 }
 
+/**
+ * 
+ * @param {object} event: event on the clicked button 
+ */
+function setCickedClass(event) {
+    const btnCount = event.target.parentElement.children.length;
+    for (let i = 0; i < btnCount; i++) {
+        let button = event.target.parentElement.children[i];
+        button.classList.remove("clicked");
+    }
+    event.target.classList.add("clicked");
+}
+
 export { renderButtons };
-
-
-// buttons management
-// const buttonAll = document.querySelector(".btn-all");
-// const buttonObjects = document.querySelector(".btn-objects");
-// const buttonApartments = document.querySelector(".btn-apratments");
-// const buttonHotelsNRestaurants = document.querySelector(".btn-hotels-and-restaurants");
-
-// buttonAll.addEventListener("click", async function () {
-//     const response = await fetch("http://localhost:5678/api/works");
-//     const works = await response.json();
-//     document.querySelector(".gallery").innerHTML = "";
-//     generateWorks(works);
-//     buttonObjects.classList.remove("clicked");
-//     buttonApartments.classList.remove("clicked");
-//     buttonHotelsNRestaurants.classList.remove("clicked");
-//     buttonAll.classList.add("clicked");
-// });
-
-// buttonObjects.addEventListener("click", async function () {
-//      const response = await fetch("http://localhost:5678/api/works");
-//      const works = await response.json();
-//      const worksObjects = works.filter(function(work) {
-//         return work.category.name === "Objects";
-//      });
-//      console.log(worksObjects);
-//      document.querySelector(".gallery").innerHTML = "";
-//      generateWorks(worksObjects);
-//      buttonAll.classList.remove("clicked");
-//      buttonApartments.classList.remove("clicked");
-//      buttonHotelsNRestaurants.classList.remove("clicked");
-//      buttonObjects.classList.add("clicked");
-// });
-
-
-// buttonApartments.addEventListener("click", async function () {
-//     const response = await fetch("http://localhost:5678/api/works");
-//     const works = await response.json();
-//     const worksApartments = works.filter(function(work) {
-//         return work.category.name === "Apartments";
-//     });
-//     document.querySelector(".gallery").innerHTML = "";
-//     generateWorks(worksApartments);
-//     buttonAll.classList.remove("clicked");
-//     buttonObjects.classList.remove("clicked");
-//     buttonHotelsNRestaurants.classList.remove("clicked");
-//     buttonApartments.classList.add("clicked");
-// });
-
-// buttonHotelsNRestaurants.addEventListener("click", async function() {
-//     const response = await fetch("http://localhost:5678/api/works");
-//     const works = await response.json();
-//     const worksHotelsNRestaurants = works.filter(function(work) {
-//         return work.category.name === "Hotels & restaurants";
-//     });
-//     document.querySelector(".gallery").innerHTML = "";
-//     generateWorks(worksHotelsNRestaurants);
-//     buttonAll.classList.remove("clicked");
-//     buttonObjects.classList.remove("clicked");
-//     buttonApartments.classList.remove("clicked");
-//     buttonHotelsNRestaurants.classList.add("clicked");
-// });
