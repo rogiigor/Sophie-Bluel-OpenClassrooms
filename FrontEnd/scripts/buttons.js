@@ -73,38 +73,63 @@ async function renderButtons() {
  * @param {Node} section: Node element for section that is parent of button
  */
 function addEvenetListenerToFilterSection(section, works) {
-    section.addEventListener("click", async (event) => {
-
-        if (event.target.nodeName === 'BUTTON') {
-                const category = event.target.textContent;
-
-                let filteredWorks = [...works];
-                if (category != "All") {
-                    filteredWorks = works.filter((work) => {
-                        return work.category.name === category;
-                    })
-                }
-                document.querySelector(".gallery").innerHTML = "";
-                generateWorks(filteredWorks);
-
-                // set clicked class to clicked button
-                setCickedClass(event);
-        }
-    })
-
+    section.addEventListener("click", trackElements(works))
 }
 
 /**
- * 
- * @param {object} event: event on the clicked button 
+ * This function render button based on category which is 
+ * event.target of the clicked section where all buttons are
+ * @param {Node elements} works : works retrieved by HTTP call
+ * @returns 
  */
-function setCickedClass(event) {
-    const btnCount = event.target.parentElement.children.length;
-    for (let i = 0; i < btnCount; i++) {
-        let button = event.target.parentElement.children[i];
-        button.classList.remove("clicked");
+function trackElements(works) {
+    
+    let previousTraget = null;
+    let currentTarget = null;
+
+    // closure
+    return (event) => {
+        if (event.target.nodeName === 'BUTTON') {
+            const category = event.target.textContent;
+
+            let filteredWorks = [...works];
+            if (category != "All") {
+                filteredWorks = works.filter((work) => {
+                    return work.category.name === category;
+                })
+            }
+
+            document.querySelector(".gallery").innerHTML = "";
+            generateWorks(filteredWorks);
+
+            ({ previousTraget, currentTarget } = setClickedClass(previousTraget, currentTarget, event));
+        }
+        
+    };
+};
+
+
+/**
+ * This function sets clicked class depending on previous or current target and event
+ * @param {*} previousTraget 
+ * @param {*} currentTarget 
+ * @param {*} event 
+ * @returns 
+ */
+function setClickedClass(previousTraget, currentTarget, event) {
+    previousTraget = currentTarget;
+    currentTarget = event.target;
+
+    // set clicked class to clicked button
+    if (previousTraget !== null) {
+        previousTraget.classList.remove("clicked");
+    } else {
+        // button All is clicked by default
+        const allButton = document.querySelector(".btn-all");
+        allButton.classList.remove("clicked");
     }
-    event.target.classList.add("clicked");
+    currentTarget.classList.add("clicked");
+    return { previousTraget, currentTarget };
 }
 
 export { renderButtons };
