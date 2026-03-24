@@ -1,3 +1,5 @@
+import { generateWorks } from "./works.js";
+
 /*********************************************************************************
  * 
  * This file contains all functions nenessary to render and treat events 
@@ -36,15 +38,6 @@ function generateButtons(categories) {
 }
 
 /**
- * This function makes first letter of word capital 
- * @param {string} word : a word
- */
-function capiatlizeFirstLetterWord(word) {
-    let newWord = word[0].toUpperCase() + word.substring(1);
-    return newWord;
-}
-
-/**
  * This function creates class from category name
  * @param {string} categories : catgory
  */
@@ -76,8 +69,24 @@ async function renderButtons() {
  * @param {Node} button: Node element for a button
  */
 function addEvenetListenerToButton(button) {
-    console.log(button);
+    // get button's category
+    let category = button.textContent;
 
+    button.addEventListener("click", async () => {
+        // get all works
+        const response = await fetch("http://localhost:5678/api/works");
+        const works = await response.json();
+        
+        let filteredWorks = [...works];
+        if (category != "All") {
+            filteredWorks = works.filter((work) => {
+                return work.category.name === category;
+            })
+        }
+        document.querySelector(".gallery").innerHTML = "";
+        generateWorks(filteredWorks);
+
+    })
 
 }
 
