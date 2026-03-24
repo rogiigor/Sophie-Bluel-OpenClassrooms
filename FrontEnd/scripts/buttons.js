@@ -22,7 +22,7 @@ function generateButtons(categories) {
     buttonAll.classList.add("clicked");
 
     filtersSection.appendChild(buttonAll);
-    addEvenetListenerToButton(buttonAll);
+    addEvenetListenerToButton(filtersSection);
 
     for (let i = 0; i < categories.length; i++) {
         let btnCategory = categories[i].name;
@@ -33,7 +33,7 @@ function generateButtons(categories) {
         filterButton.textContent = btnCategory;
         filterButton.classList.add(classBtnCategory);
         filtersSection.appendChild(filterButton);
-        addEvenetListenerToButton(filterButton);
+        addEvenetListenerToButton(filtersSection);
     }
 }
 
@@ -66,26 +66,27 @@ async function renderButtons() {
 
 /**
  * This function adds eveentListener to button
- * @param {Node} button: Node element for a button
+ * @param {Node} section: Node element for section that is parent of button
  */
-function addEvenetListenerToButton(button) {
-    // get button's category
-    let category = button.textContent;
+async function addEvenetListenerToButton(section) {
+    // get all works
+    const response = await fetch("http://localhost:5678/api/works");
+    const works = await response.json();
+    let filteredWorks = [...works];
 
-    button.addEventListener("click", async () => {
-        // get all works
-        const response = await fetch("http://localhost:5678/api/works");
-        const works = await response.json();
-        
-        let filteredWorks = [...works];
-        if (category != "All") {
-            filteredWorks = works.filter((work) => {
-                return work.category.name === category;
-            })
+    section.addEventListener("click", async (event) => {
+
+        if (event.target.nodeName === 'BUTTON') {
+                const category = event.target.textContent;
+                console.log(`Button ${category} was clicked.`)
+                if (category != "All") {
+                    filteredWorks = works.filter((work) => {
+                        return work.category.name === category;
+                })
+            }
+            document.querySelector(".gallery").innerHTML = "";
+            generateWorks(filteredWorks);
         }
-        document.querySelector(".gallery").innerHTML = "";
-        generateWorks(filteredWorks);
-
     })
 
 }
