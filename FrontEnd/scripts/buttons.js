@@ -20,6 +20,7 @@ function generateButtons(categories, works) {
     buttonAll.textContent = "All";
     buttonAll.classList.add("btn-all");
     buttonAll.classList.add("clicked");
+    buttonAll.id = 0;
 
     filtersSection.appendChild(buttonAll);
     addEvenetListenerToFilterSection(filtersSection, works);
@@ -28,10 +29,12 @@ function generateButtons(categories, works) {
         let btnCategory = categories[i].name;
 
         let classBtnCategory = createClassNameFromCatheory(btnCategory);
-        
+        let btnId = categories[i].id;
+
         let filterButton = document.createElement("button");
         filterButton.textContent = btnCategory;
         filterButton.classList.add(classBtnCategory);
+        filterButton.id = btnId;
         filtersSection.appendChild(filterButton);
         addEvenetListenerToFilterSection(filtersSection, works);
     }
@@ -69,7 +72,7 @@ async function renderButtons() {
 }
 
 /**
- * This function adds eveentListener to button
+ * This function adds eventListener to button
  * @param {Node} section: Node element for section that is parent of button
  */
 function addEvenetListenerToFilterSection(section, works) {
@@ -90,17 +93,21 @@ function trackElements(works) {
     // closure
     return (event) => {
         if (event.target.nodeName === 'BUTTON') {
-            const category = event.target.textContent;
+            const categoryId = parseInt(event.target.id);
 
             let filteredWorks = [...works];
-            if (category != "All") {
+            if (categoryId !== 0) {
                 filteredWorks = works.filter((work) => {
-                    return work.category.name === category;
+                    return work.category.id === categoryId;
                 })
             }
 
+            let uniqueWorksSet = new Set();
+            filteredWorks.forEach(work => uniqueWorksSet.add(work));
+            const uniqueWorks = [...uniqueWorksSet];
+
             document.querySelector(".gallery").innerHTML = "";
-            generateWorks(filteredWorks);
+            generateWorks(uniqueWorks);
 
             ({ previousTraget, currentTarget } = setClickedClass(previousTraget, currentTarget, event));
         }
