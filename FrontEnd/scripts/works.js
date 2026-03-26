@@ -54,27 +54,4 @@ async function renderDefaultAllWorks() {
     generateWorks(works);
 }
 
-function setEditingMode() {
-    const headerElement = document.querySelector("header");
-
-    const divElement = document.createElement("div");
-    divElement.classList.add("edit-header");
-    const iconElement = document.createElement("i");
-    iconElement.classList.add("far", "fa-edit");
-    const paragraphElement = document.createElement("p");
-    paragraphElement.textContent = "Editing Mode";
-
-    divElement.appendChild(iconElement);
-    divElement.appendChild(paragraphElement);
-
-    const authToken = window.localStorage.getItem("token");
-    console.log("token: ", authToken);
-    if (authToken === null) {
-        divElement.classList.add("hidden");
-    } else {
-        divElement.classList.remove("hidden");
-        headerElement.before(divElement);
-    }
-}
-
-export { renderDefaultAllWorks, generateWorks, setEditingMode };
+export { renderDefaultAllWorks, generateWorks };
