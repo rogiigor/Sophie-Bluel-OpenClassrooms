@@ -246,3 +246,14 @@ footer nav ul {
 	margin-left: 80px;
 }
 
+.edit-header {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	background-color: black;
+	color: white;
+	margin-top: 10px;
+	padding-top: 20px;
+	min-height: 40px;
+	font-size: 16px;
+}
