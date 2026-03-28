@@ -142,11 +142,13 @@ li:hover {
 	font-size:16px;
 }
 
-.clicked {
+.clicked,
+.add-photo {
 	color: white;
 	border-color: #1D6154;
 	background-color: #1D6154;
 }
+
 .gallery {
 	width: 100%;
 	display: grid;
@@ -258,22 +260,90 @@ footer nav ul {
 	font-size: 16px;
 }
 
-.edit-span {
-	margin-left: 40px;
+.works-title {
+	position: relative;
+	text-align: center;
+}
+
+.works-title h2 {
+	text-align: cetner;
+}
+
+.edit-div {
+	position: absolute;
+	right: 360px;
+	top: 50%;
+	transform: translateY(-60%);
 }
 
 .btn-edit {
+	font-size: 15px;
 	margin-left: 10px;
 	margin-bottom: 20px;
 	border: none;
 	background: none;
+	cursor: default;
 }
 
 .icon-edit {
-	font-size: 20px;
+	margin-left: auto;
+	font-size: 18px;
 	color: black;
 }
 
 .hidden {
 	display: none;
+}
+
+.modal {
+	padding: 0;
+	margin: 0;
+}
+
+.modal-gallery,
+.modal-add-photo {
+	width: 700px;
+	padding-top: 0;
+	padding-bottom: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	min-height: 800px;
+	position: absolute;
+	top: 20%;
+	background-color: white;
+	border: 1px solid;
+	border-radius: 20px;
+	z-index: 2;
+}
+
+.btn-close {
+	border: none;
+	background: none;
+	cursor: default;
+	margin: 10px;
+	box-sizing: border-box;
+
+}
+
+.flex-right {
+	display: flex;
+	align-items: center;
+	justify-content:flex-end;
+}
+
+.flex-center {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal h2 {
+	text-align: center;
+}
+
+.flex-center {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	padding: 20px;
+	border-radius: 10px;
 }
