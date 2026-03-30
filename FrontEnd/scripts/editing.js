@@ -1,5 +1,7 @@
 import { renderDefaultAllWorks } from "./works.js";
 
+
+
 function setEditingMode() {
     const headerElement = document.querySelector("header");
     const projectsTitleElement = document.querySelector("#portfolio h2");
@@ -20,6 +22,10 @@ function setEditingMode() {
         filters.classList.add("hidden");
         headerElement.before(divHeader);
         projectsTitleElement.append(spanEditButton);
+
+        const worksTitle = document.querySelector(".works-title");
+        worksTitle.classList.add("extra-margin-bottom");
+
         handleLogoutLink();
         handleEditButton();
     }
@@ -86,28 +92,40 @@ function handleLogoutLink() {
 function handleEditButton() {
     const editButton = document.querySelector("btn-edit");
     editButton.addEventListener("click", (event) => {
-        console.log("Edit button was clicked");
 
         openModalGallery(event);
-        addCloseModalGallery();
-    })
+        
+    });
+    addCloseModalGallery();
+}
+
+const modal = document.getElementById("modal");
+const closeBtn = document.getElementById("btn-close");
+
+function openModal() {
+    modal.classList.add("show");
+}
+
+function closeModal() {
+    modal.classList.remove("show");
 }
 
 function openModalGallery(event) {
-    const modalGalleryDialog = document.querySelector(".modal-gallery");
-    modalGalleryDialog.showModal();
-    event.stopPropagation();
+    const modal = document.getElementById("modal");
+    openModal(modal);
+    const addPhoto = document.querySelector(".modal-add-photo");
+    addPhoto.classList.add("hidden");
 }
 
+
 function addCloseModalGallery() {
-    const modalGalleryDialog = document.querySelector(".modal-gallery");
-    const closeModalButton = document.querySelector(".btn-close");
-    closeModalButton.addEventListener("click", () => {
-        modalGalleryDialog.close();
+    closeBtn.addEventListener("click",() => {
+        closeModal();
     });
-    modalGalleryDialog.addEventListener("click", (event) => {
-        if (event.target === modalGalleryDialog) {
-            modalGalleryDialog.close();
+
+    modal.addEventListener("click", function (event) {
+        if (event.target === modal) {
+            closeModal();
         }
     })
 }

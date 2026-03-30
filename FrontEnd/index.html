@@ -63,41 +63,41 @@
 			<input type="submit" value="Send">
 		</form>
 	</section>
-	<section class="modal">
-		<dialog class="modal-gallery">
-			<div class="flex-right">
-				<button class="btn-close">
-					<i class="fas fa-times fa-lg"></i>
-				</button>
-			</div>
-			<h2>Photo Gallery</h2>
-			<hr>
-			<div class="flex-center">
-				<button class="add-photo">Add a photo</button>
-			</div>
-		</dialog>
-		<dialog class="modal-add-photo">
-			<div class="add-photo-nav">
-				<div class="flex">
-					<button class="back-to-gallery">&larr</button>
-					<button class="btn-close">x</button>
+	<section id="modal" class="modal-overlay">
+		<div class="modal-box">
+			<div class="modal-gallery">
+				<button id="btn-close" class="modal-close">x</button>
+				<h2>Photo Gallery</h2>
+				<hr>
+				<div class="btn-container">
+					<button class="btn-add-photo">Add a photo</button>
 				</div>
-				<h2>Add a Photo</h2>
-				<div class="choose-photo">
-					<!-- To Do-->
-				</div>
-				<form action="#" method="post">
-					<label for="title">Title</label>
-					<input type="text" name="tile" id="title">
-					<label for="category">Category</label>
-					<select id="category-select" name="category-select">
-						<!-- Fill Dynamically -->
-					</select>
-					<br>
-					<button class="confirm">Confirm</button>
-				</form>
 			</div>
-		</dialog>
+			<div class="modal-add-photo">
+				<div class="add-photo-nav">
+					<div class="modal-header">
+						<button class="back-to-gallery">&larr</button>
+						<button class="btn-close">x</button>
+					</div>
+					<div class="btn-container">
+						<h2>Add a Photo</h2>
+					</div>
+					<div class="choose-photo">
+						<!-- To Do-->
+					</div>
+					<form action="#" method="post">
+						<label for="title">Title</label>
+						<input type="text" name="tile" id="title">
+						<label for="category">Category</label>
+						<select id="category-select" name="category-select">
+							<!-- Fill Dynamically -->
+						</select>
+						<br>
+						<button class="confirm">Confirm</button>
+					</form>
+				</div>
+			</div>
+		</div>
 	</section>
 </main>
 
