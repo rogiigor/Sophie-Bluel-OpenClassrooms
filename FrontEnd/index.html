@@ -15,7 +15,8 @@
 	<script type="module" src="scripts/works.js" defer></script>
 	<script type="module" src="scripts/buttons.js" ></script>
 	<script type="module" src="scripts/editing.js"></script>
-	<script type="module" src="scripts/main.js" main.js></script>
+	<script type="module" src="scripts/main.js"></script>
+	<script type="module" src="scripts/modal.js"></script>
 </head>
 <body>
 <header>
@@ -66,7 +67,7 @@
 	<section id="modal" class="modal-overlay">
 		<div class="modal-box">
 			<div class="modal-gallery">
-				<button id="btn-close" class="modal-close">x</button>
+				<button class="modal-close">x</button>
 				<h2>Photo Gallery</h2>
 				<hr>
 				<div class="btn-container">
@@ -76,8 +77,8 @@
 			<div class="modal-add-photo">
 				<div class="add-photo-nav">
 					<div class="modal-header">
-						<button class="back-to-gallery">&larr</button>
-						<button class="btn-close">x</button>
+						<button class="back-to-gallery">&larr;</button>
+						<button class="modal-close">x</button>
 					</div>
 					<div class="btn-container">
 						<h2>Add a Photo</h2>

@@ -1,6 +1,6 @@
-import { renderDefaultAllWorks } from "./works.js";
-
-
+import { displayDeleteGallery, deleteDeleteGallery,
+         handleButtonAddPhoto
+ } from "./modal.js";
 
 function setEditingMode() {
     const headerElement = document.querySelector("header");
@@ -8,20 +8,20 @@ function setEditingMode() {
     const filters = document.querySelector(".filters");
 
     const divHeader = createEditHeader();
-    const spanEditButton = createEditButton();
+    const editButton = createEditButton();
 
     const authToken = window.localStorage.getItem("token");
 
     if (authToken === null) {
         divHeader.classList.add("hidden");
-        spanEditButton.classList.add("hidden");
+        editButton.classList.add("hidden");
         handleLoginLink();
     } else {
         divHeader.classList.remove("hidden");
-        spanEditButton.classList.remove("hidden");
+        editButton.classList.remove("hidden");
         filters.classList.add("hidden");
         headerElement.before(divHeader);
-        projectsTitleElement.append(spanEditButton);
+        projectsTitleElement.append(editButton);
 
         const worksTitle = document.querySelector(".works-title");
         worksTitle.classList.add("extra-margin-bottom");
@@ -32,6 +32,12 @@ function setEditingMode() {
 }
 
 function createEditHeader() {
+    /* 
+    <div class="edit-header">
+        <i class="far fa-edit"></i>
+        <p>Editing Mode</p>
+    </div>
+    */
     const divElement = document.createElement("div");
     divElement.classList.add("edit-header");
     const iconElement = document.createElement("i");
@@ -45,14 +51,20 @@ function createEditHeader() {
 }
 
 function createEditButton() {
+    /*
+    <div class="edit-div">
+        <i class="far fa-edit icon-edit"></i>
+        <btn-edit class="btn-edit">Edit</btn-edit>
+    </div>
+    */
     const divElement = document.createElement("div");
     divElement.classList.add("edit-div");
     const iconElement = document.createElement("i");
     iconElement.classList.add("far", "fa-edit", "icon-edit");
-    const button = document.createElement("btn-edit");
+    const button = document.createElement("button");
+
     button.classList.add("btn-edit");
     button.innerText = "Edit";
-    button.classList.add("edit-button");
 
     divElement.appendChild(iconElement);
     divElement.appendChild(button);
@@ -90,17 +102,16 @@ function handleLogoutLink() {
 }
 
 function handleEditButton() {
-    const editButton = document.querySelector("btn-edit");
+    const editButton = document.querySelector(".btn-edit");
     editButton.addEventListener("click", (event) => {
-
         openModalGallery(event);
-        
     });
     addCloseModalGallery();
+    handleButtonAddPhoto();
 }
 
 const modal = document.getElementById("modal");
-const closeBtn = document.getElementById("btn-close");
+const closeBtn = document.querySelector(".modal-close");
 
 function openModal() {
     modal.classList.add("show");
@@ -115,19 +126,23 @@ function openModalGallery(event) {
     openModal(modal);
     const addPhoto = document.querySelector(".modal-add-photo");
     addPhoto.classList.add("hidden");
+    displayDeleteGallery();
 }
 
 
 function addCloseModalGallery() {
     closeBtn.addEventListener("click",() => {
         closeModal();
+        deleteDeleteGallery();
     });
 
     modal.addEventListener("click", function (event) {
         if (event.target === modal) {
             closeModal();
+            deleteDeleteGallery();
         }
-    })
+    });
+    
 }
 
 export { setEditingMode };

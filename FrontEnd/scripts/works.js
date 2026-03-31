@@ -54,4 +54,4 @@ async function renderDefaultAllWorks() {
     generateWorks(works);
 }
 
-export { renderDefaultAllWorks, generateWorks };
+export { renderDefaultAllWorks, generateWorks, getLocalImageFromImageUrl };

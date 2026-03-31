@@ -187,8 +187,10 @@ margin: auto;
 #login h2 {
 	margin-left: -30%;
 }
+
 #contact form,
-#login form {
+#login form,
+#modal form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
@@ -277,7 +279,7 @@ footer nav ul {
 	position: absolute;
 	right: 360px;
 	top: 50%;
-	transform: translateY(-60%);
+	transform: translateY(-40%);
 }
 
 .btn-edit {
@@ -320,7 +322,7 @@ footer nav ul {
 	background-color: white;
 	width: 90%;
 	max-width: 700px;
-	margin: 600px auto;
+	margin: 200px auto;
 	padding: 20px;
 	border-radius: 10px;
 	position: relative;
@@ -330,6 +332,17 @@ footer nav ul {
 .modal-close {
 	position: absolute;
 	right: 12px;
+	top: 8px;
+	font-size: 24px;
+	border: none;
+	background: none;
+	cursor: pointer;
+}
+
+/* left arrow */
+.back-to-gallery {
+	position: absolute;
+	left: 12px;
 	top: 8px;
 	font-size: 24px;
 	border: none;
@@ -363,4 +376,36 @@ footer nav ul {
 	color: black;
 	margin-bottom: 40px;
 	margin-top: 40px;
+}
+
+.delete-gallery {
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	grid-template-rows: repeat(3, 1fr);
+	grid-gap: 30px 5px;
+	margin-left: 60px;
+	margin-right: 60px;
+	margin-bottom: 80px;
+}
+
+.thumbnail-container {
+	position: relative;
+	display: block;
+	width: 100px;
+}
+
+.thumbnail-container img {
+	width: 100%;
+	height: 100%;
+}
+
+.delete-btn {
+	background-color: black;
+	position: absolute;
+	top: 5px;
+	right: 5px;
+}
+
+.fa-trash-can {
+	color: white;
 }
