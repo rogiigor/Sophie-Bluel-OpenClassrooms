@@ -1,6 +1,6 @@
 /*********************************************************************************
  * 
- * This file contains all functions nenessary to reder Sophie Bluel works page. 
+ * This file contains all functions necessary to render Sophie Bluel works page. 
  * 
  *********************************************************************************/
 
@@ -37,15 +37,15 @@ function generateWorks(works) {
  * @param {string} imageUrl : Url of image from HTTP call
  */
 function getLocalImageFromImageUrl(imageUrl) {
-    let urlPparts = imageUrl.split("/");
-    let imgFromDb = urlPparts[urlPparts.length - 1];
+    let urlParts = imageUrl.split("/");
+    let imgFromDb = urlParts[urlParts.length - 1];
     let imgName = imgFromDb.split(/\d/)[0];
     let imgExtension = imgFromDb.split(".")[1];
     return "assets/images/" + imgName + "." + imgExtension;
 }
 
 /**
- * This function rendels all designer's works
+ * This function renders all designer's works
  */
 async function renderDefaultAllWorks() {
     // Retrieve gallery works via HTTP request and convert it to JSON

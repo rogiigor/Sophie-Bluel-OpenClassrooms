@@ -354,7 +354,8 @@ footer nav ul {
 	display: none;
 }
 
-.btn-add-photo {
+.btn-add-photo,
+.btn-confirm {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -408,4 +409,26 @@ footer nav ul {
 
 .fa-trash-can {
 	color: white;
+}
+
+.choose-photo {
+	height: 200px;
+	display: inline-block;
+}
+
+.fa-image {
+	font-size: 10em;
+}
+
+#category-select {
+	margin-bottom: 30px;
+}
+
+/* Custom "grayed out" style */
+.btn-confirm:disabled {
+  background-color: #cccccc; /* Light gray background */
+  color: #666666;           /* Darker gray text for contrast */
+  opacity: 0.6;             /* Semi-transparent look */
+  cursor: not-allowed;      /* Change cursor to a circle with a slash */
+  filter: grayscale(100%);  /* Removes all color */
 }

@@ -1,4 +1,5 @@
 import { getLocalImageFromImageUrl } from "./works.js";
+import { closeModal } from "./editing.js";
 
 async function displayDeleteGallery() {
     // Retrieve gallery works via HTTP request and convert it to JSON
@@ -95,12 +96,66 @@ function handleButtonAddPhoto() {
     btnAddPhoto.addEventListener("click", () => {
         // close delete gallery modal
         const deleteGalleryModal = document.querySelector(".modal-gallery");
-        console.log(deleteGalleryModal);
         deleteGalleryModal.classList.add("hidden");
         // open add photo modal
         const addPhotoModal = document.querySelector(".modal-add-photo");
         addPhotoModal.classList.remove("hidden");
+        // get categories list to fill select element
+        addCategoriesToSelectElement();
+        // disable confirm button
+        const confirmButton = document.querySelector(".btn-confirm");
+        confirmButton.disabled = true;
     });
 }
 
-export { displayDeleteGallery, deleteDeleteGallery, handleButtonAddPhoto };
+async function addCategoriesToSelectElement() {
+    // Retrieve category of works via HTTP request and convert it to JSON
+    const categoriesResponse = await fetch("http://localhost:5678/api/categories");
+    const categories = await categoriesResponse.json();
+
+    const selectCategory = document.getElementById("category-select");
+    // create default option
+    const selectOption = document.createElement("option");
+    selectOption.value = "";
+    selectCategory.appendChild(selectOption);
+
+    for (let i = 0; i < categories.length; i++) {
+        let category = categories[i].name;
+        
+        const selectOption = document.createElement("option");
+        selectOption.value = category;
+        selectOption.innerText = category;
+        selectCategory.appendChild(selectOption);
+    }
+}
+
+const modal = document.getElementById("modal");
+const closeBtn = document.querySelector(".modal-add-photo .modal-close");
+function handleCloseAddPhoto() {
+    closeBtn.addEventListener("click",() => {
+            closeModal();
+            deleteDeleteGallery();
+        });
+    
+        modal.addEventListener("click", function (event) {
+            if (event.target === modal) {
+                closeModal();
+                deleteDeleteGallery();
+            }
+        });
+}
+
+function handleGoBackAddPhoto() {
+    const goBackButton = document.querySelector(".back-to-gallery");
+    goBackButton.addEventListener("click", () => {
+        // open delete gallery modal
+        const deleteGalleryModal = document.querySelector(".modal-gallery");
+        deleteGalleryModal.classList.remove("hidden");
+        // close add photo modal
+        const addPhotoModal = document.querySelector(".modal-add-photo");
+        addPhotoModal.classList.add("hidden");
+    })
+}
+
+export { displayDeleteGallery, deleteDeleteGallery, 
+    handleButtonAddPhoto, handleCloseAddPhoto, handleGoBackAddPhoto };

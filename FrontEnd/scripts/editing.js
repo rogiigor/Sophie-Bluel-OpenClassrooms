@@ -1,5 +1,6 @@
 import { displayDeleteGallery, deleteDeleteGallery,
-         handleButtonAddPhoto
+         handleButtonAddPhoto, handleCloseAddPhoto,
+         handleGoBackAddPhoto
  } from "./modal.js";
 
 function setEditingMode() {
@@ -26,8 +27,58 @@ function setEditingMode() {
         const worksTitle = document.querySelector(".works-title");
         worksTitle.classList.add("extra-margin-bottom");
 
+        /** when user comes in and already logged in, change login to logout.
+         * This will only happened if we have bearer token.
+         */
         handleLogoutLink();
+
+        /** 
+         * <section id="modal" class="modal-overlay">
+		 *  <div class="modal-box">
+		 *	    <div class="modal-gallery">
+         *          <button class="modal-close">x</button>
+		 *		    ...
+		 *	    </div>
+		 *	    <div class="modal-add-photo">
+		 *		    ...
+		 *	    </div>
+		 *    </div>
+	     * </section> 
+         *
+         * On clicking edit button -> get element by id 'modal' and add class 'show'
+         *                        -> get element with class 'modal-add-photo' add class 'hidden'
+         *                        -> display thumbnails delete gallery
+         */
         handleEditButton();
+
+        /**
+         *  on click to button with class 'modal-close' in 'modal-gallery':
+         *  1. section with id 'modal' remove class 'show'
+         *  2. div with class 'modal-add-photo' remove class 'hidden' : put back to original state
+         *  3. div with class 'modal-gallery remove class 'hidden' : put back to its original state
+         *  4. delete thumbnail delete gallery (otherwise when reopening it will show double of elements)
+         *  */
+        addCloseModalGallery();
+
+        /**
+         * on click on button with class 'add-photo' (from first modal) 
+         *  1. div with class 'modal-gallery' add 'hidden' class, as we might return to it 2nd modal
+         *  2. div with class 'modal-add-photo' remove class 'hidden' 
+         */
+        handleButtonAddPhoto();
+
+        /**
+         * on click button with class 'modal-close' in 'add-photo' modal:
+         *   do the same as addCloseModalGallery()
+         */
+        handleCloseAddPhoto();
+
+        /**
+         * on click left arrow '<-' on add-photo modal:
+         *   display delete gallery
+         *   hide add photo modal
+         */
+        handleGoBackAddPhoto();
     }
 }
 
@@ -106,12 +157,10 @@ function handleEditButton() {
     editButton.addEventListener("click", (event) => {
         openModalGallery(event);
     });
-    addCloseModalGallery();
-    handleButtonAddPhoto();
 }
 
 const modal = document.getElementById("modal");
-const closeBtn = document.querySelector(".modal-close");
+const closeBtn = document.querySelector(".modal-gallery .modal-close");
 
 function openModal() {
     modal.classList.add("show");
@@ -119,6 +168,12 @@ function openModal() {
 
 function closeModal() {
     modal.classList.remove("show");
+    
+    // put back classes
+    const addPhotoModal = document.querySelector(".modal-add-photo");
+    addPhotoModal.classList.remove("hidden");
+    const deleteGalleryModal = document.querySelector(".modal-gallery");
+    deleteGalleryModal.classList.remove("hidden");
 }
 
 function openModalGallery(event) {
@@ -145,4 +200,4 @@ function addCloseModalGallery() {
     
 }
 
-export { setEditingMode };
+export { setEditingMode, addCloseModalGallery, closeModal };

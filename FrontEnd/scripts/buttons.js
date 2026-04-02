@@ -2,7 +2,7 @@ import { generateWorks } from "./works.js";
 
 /*********************************************************************************
  * 
- * This file contains all functions nenessary to render and treat events 
+ * This file contains all functions necessary to render and treat events 
  * for filter buttons. 
  * 
  *********************************************************************************/
@@ -23,7 +23,7 @@ function generateButtons(categories, works) {
     buttonAll.id = 0;
 
     filtersSection.appendChild(buttonAll);
-    addEvenetListenerToFilterSection(filtersSection, works);
+    addEventListenerToFilterSection(filtersSection, works);
 
     for (let i = 0; i < categories.length; i++) {
         let btnCategory = categories[i].name;
@@ -36,7 +36,7 @@ function generateButtons(categories, works) {
         filterButton.classList.add(classBtnCategory);
         filterButton.id = btnId;
         filtersSection.appendChild(filterButton);
-        addEvenetListenerToFilterSection(filtersSection, works);
+        addEventListenerToFilterSection(filtersSection, works);
     }
 }
 
@@ -75,7 +75,7 @@ async function renderButtons() {
  * This function adds eventListener to button
  * @param {Node} section: Node element for section that is parent of button
  */
-function addEvenetListenerToFilterSection(section, works) {
+function addEventListenerToFilterSection(section, works) {
     section.addEventListener("click", trackElements(works))
 }
 
@@ -87,7 +87,7 @@ function addEvenetListenerToFilterSection(section, works) {
  */
 function trackElements(works) {
     
-    let previousTraget = null;
+    let previousTarget = null;
     let currentTarget = null;
 
     // closure
@@ -109,7 +109,7 @@ function trackElements(works) {
             document.querySelector(".gallery").innerHTML = "";
             generateWorks(uniqueWorks);
 
-            ({ previousTraget, currentTarget } = setClickedClass(previousTraget, currentTarget, event));
+            ({ previousTraget: previousTarget, currentTarget } = setClickedClass(previousTarget, currentTarget, event));
         }
         
     };
@@ -118,25 +118,25 @@ function trackElements(works) {
 
 /**
  * This function sets clicked class depending on previous or current target and event
- * @param {*} previousTraget 
+ * @param {*} previousTarget 
  * @param {*} currentTarget 
  * @param {*} event 
  * @returns 
  */
-function setClickedClass(previousTraget, currentTarget, event) {
-    previousTraget = currentTarget;
+function setClickedClass(previousTarget, currentTarget, event) {
+    previousTarget = currentTarget;
     currentTarget = event.target;
 
     // set clicked class to clicked button
-    if (previousTraget !== null) {
-        previousTraget.classList.remove("clicked");
+    if (previousTarget !== null) {
+        previousTarget.classList.remove("clicked");
     } else {
         // button All is clicked by default
         const allButton = document.querySelector(".btn-all");
         allButton.classList.remove("clicked");
     }
     currentTarget.classList.add("clicked");
-    return { previousTraget, currentTarget };
+    return { previousTarget: previousTarget, currentTarget };
 }
 
 export { renderButtons };
