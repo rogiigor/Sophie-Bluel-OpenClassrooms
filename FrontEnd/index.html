@@ -68,7 +68,7 @@
 		<div class="modal-box">
 			<div class="modal-gallery">
 				<button class="modal-close">x</button>
-				<h2>Photo Gallery</h2>
+				<h2 class="modal-heading">Photo Gallery</h2>
 				<hr>
 				<div class="btn-container">
 					<button class="btn-add-photo">Add a photo</button>
@@ -80,25 +80,26 @@
 						<button class="back-to-gallery">&larr;</button>
 						<button class="modal-close">x</button>
 					</div>
-					<div class="btn-container">
-						<h2>Add a Photo</h2>
-					</div>
-					<figure class="choose-photo">
-						<i class="fa-regular fa-image"></i>
-						<button class="add-photo">Add photo</button>
-						<figcaption>jpg, png: max 4 mb</figcaption>
-					</figure>
-					<form action="#" method="post">
-						<label for="title">Title</label>
-						<input type="text" name="tile" id="title">
-						<label for="category">Category</label>
-						<select id="category-select" name="category-select">
-						</select>
-						<hr>
-						<div class="btn-container">
-							<button class="btn-confirm">Confirm</button>
-						</div>
-					</form>
+					<section id="add-gallery-photo">
+						<h2 class="modal-heading">Add Photo</h2>
+						<figure class="choose-photo">
+							<i class="fa-regular fa-image"></i>
+							<input type="submit" id="submit" value="+ Add Photo" class="add-photo-input-position">
+							<figcaption>jpg, png: max 4 mb</figcaption>
+						</figure>
+						<form action="#" method="post" class="photo-details">
+							<label for="title">Title</label>
+							<input type="text" name="tile" id="title">
+							<label for="category">Category</label>
+							<select id="category-select" name="category-select">
+							</select>
+							<hr>
+							<div class="btn-container">
+								<button class="btn-confirm">Confirm</button>
+							</div>
+						</form>
+					</section>
+					
 				</div>
 			</div>
 		</div>

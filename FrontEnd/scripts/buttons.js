@@ -28,7 +28,7 @@ function generateButtons(categories, works) {
     for (let i = 0; i < categories.length; i++) {
         let btnCategory = categories[i].name;
 
-        let classBtnCategory = createClassNameFromCatheory(btnCategory);
+        let classBtnCategory = createClassNameFromCategory(btnCategory);
         let btnId = categories[i].id;
 
         let filterButton = document.createElement("button");
@@ -44,7 +44,7 @@ function generateButtons(categories, works) {
  * This function creates class from category name
  * @param {string} categories : catgory
  */
-function createClassNameFromCatheory(category) {
+function createClassNameFromCategory(category) {
     const words = category.split(" ");
     const onlyAlphabeticWords = words.map((word) => {
         if (word === "&") {

@@ -190,7 +190,8 @@ margin: auto;
 
 #contact form,
 #login form,
-#modal form {
+#modal form,
+#add-gallery-photo form {
 	text-align: left;
 	margin-top:30px;
 	display: flex;
@@ -198,14 +199,17 @@ margin: auto;
 }
 
 #contact input,
-#login input {
+#login input,
+#add-gallery-photo input,
+#add-gallery-photo select {
 	height: 50px;
 	font-size: 1.2em;
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 #contact label,
-#login label {
+#login label,
+#add-gallery-photo label {
 	margin: 2em 0 1em 0;
 }
 #contact textarea {
@@ -272,7 +276,7 @@ footer nav ul {
 }
 
 .works-title h2 {
-	text-align: cetner;
+	text-align: center;
 }
 
 .edit-div {
@@ -355,7 +359,8 @@ footer nav ul {
 }
 
 .btn-add-photo,
-.btn-confirm {
+.btn-confirm,
+.btn-choose-photo {
 	font-family: 'Syne';
 	font-weight: 700;
 	color: white;
@@ -364,6 +369,15 @@ footer nav ul {
 	width: 180px;
 	text-align: center;
 	border-radius: 60px ;
+}
+
+.modal-heading {
+	font-family: 'Work Sans';
+	font-style: normal;
+	font-weight: 400;
+	font-size: 30px;
+	line-height: 19px;
+	color: black;
 }
 
 .btn-container {
@@ -412,12 +426,49 @@ footer nav ul {
 }
 
 .choose-photo {
-	height: 200px;
-	display: inline-block;
+	position: relative;
+	height: 240px;
+	width: 100%;
+	
+	background-color: #E8F1F7;
+	border-radius: 3px;
+
+	display: flex;
+  	justify-content: center;
+  	align-items: center;
+  	flex-direction: column;
+  	cursor: pointer;
 }
 
-.fa-image {
-	font-size: 10em;
+/* image position in add photo */
+.choose-photo .fa-image {
+	position: absolute;
+	font-size: 7em;
+	left: 200px;
+	top: 20px;
+	color: #999;
+	background: #E8F1F7;
+	opacity: 0.5;
+}
+
+/* input to choose photo */
+.add-photo-input-position {
+	opacity: 0.5;
+	position: absolute;
+	top: 95px;
+	left: 60px;
+	color: black !important;
+	background: #999 !important;
+	font-weight: 100;
+	font-family: 'Work Sans' !important;
+	font-style: normal !important;
+}
+
+/* figcaption position */
+#add-gallery-photo figcaption {
+	position: absolute;
+	top: 195px;
+	left: 180px;
 }
 
 #category-select {
@@ -431,4 +482,14 @@ footer nav ul {
   opacity: 0.6;             /* Semi-transparent look */
   cursor: not-allowed;      /* Change cursor to a circle with a slash */
   filter: grayscale(100%);  /* Removes all color */
+}
+
+#add-gallery-photo {
+	margin-left: 100px;
+	margin-right: 100px;
+}
+
+#add-gallery-photo hr {
+  width: 100%;
+  margin: 20px 0;
 }

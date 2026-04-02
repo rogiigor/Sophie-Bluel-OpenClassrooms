@@ -135,14 +135,21 @@ function handleCloseAddPhoto() {
     closeBtn.addEventListener("click",() => {
             closeModal();
             deleteDeleteGallery();
+            deleteCategoryOptions();
         });
     
         modal.addEventListener("click", function (event) {
             if (event.target === modal) {
                 closeModal();
                 deleteDeleteGallery();
+                deleteCategoryOptions();
             }
         });
+}
+
+function deleteCategoryOptions() {
+    const selectCategory = document.getElementById("category-select");
+    selectCategory.innerHTML = "";
 }
 
 function handleGoBackAddPhoto() {
