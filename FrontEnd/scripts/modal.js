@@ -9,10 +9,10 @@ async function displayDeleteGallery() {
 }
 
 function deleteDeleteGallery() {
-    const modalGalleryTitle = document.querySelector("#modal h2");
+    const modalGalleryTitle = document.querySelector(".modal-gallery h2");
     const deleteGallery = modalGalleryTitle.nextElementSibling;
 
-    if (deleteGallery) {
+    if (deleteGallery && deleteGallery.classList.contains("delete-gallery")) {
         deleteGallery.remove();
     }
 }
@@ -130,9 +130,9 @@ async function addCategoriesToSelectElement() {
 }
 
 const modal = document.getElementById("modal");
-const closeBtn = document.querySelector(".modal-add-photo .modal-close");
+const closeBtnAddPhotoModal = document.querySelector(".modal-add-photo .modal-close");
 function handleCloseAddPhoto() {
-    closeBtn.addEventListener("click",() => {
+    closeBtnAddPhotoModal.addEventListener("click",() => {
             closeModal();
             deleteDeleteGallery();
             deleteCategoryOptions();
