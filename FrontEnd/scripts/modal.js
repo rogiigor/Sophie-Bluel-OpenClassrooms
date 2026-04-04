@@ -17,6 +17,45 @@ function deleteDeleteGallery() {
     }
 }
 
+function deleteElementFromDeleteGallery(id) {
+    // get delete gallery
+    const modalGalleryTitle = document.querySelector(".modal-gallery h2");
+    const deleteGallery = modalGalleryTitle.nextElementSibling;
+
+    for (let i = 0; i < deleteGallery.childElementCount; i++) {
+        const thumbnailDivElement = deleteGallery.children[i];
+        thumbnailDivElement.childNodes.forEach(node => {
+            if (node.tagName === 'BUTTON' && Number(node.id.substring(4)) === id) {
+                // found match
+                console.log(node);
+                if (node.parentElement.previousSibling !== null) {
+                    node.parentElement.previousSibling.nextSibling.remove();
+                } else {
+                    // first element
+                    node.parentElement.parentElement.parentElement.removeChild();
+                }
+            }
+        });
+    }
+}
+
+function deleteElementFromGallery(id) {
+    // get gallery
+    const gallery = document.querySelector(".gallery");
+    gallery.childNodes.forEach(node => {
+        if (node.tagName === 'FIGURE' && Number(node.id.substring(4)) === id) {
+            // found match
+            if (node.previousSibling === null) {
+                // first element
+                node.parentElement.removeChild();
+            } else {
+                node.previousSibling.nextSibling.remove();
+            }
+        }
+    });
+
+}
+
 async function generateDeleteGalley(works) {
     const modalGalleryTitle = document.querySelector("#modal h2");
 
@@ -76,8 +115,8 @@ async function handleDeleteImageEvent(buttonElement, thumbnail) {
         ).then(response => {
             if (response.status === 204) {
                 console.log("image was successfully deleted");
-                deleteDeleteGallery();
-                displayDeleteGallery();
+                deleteElementFromDeleteGallery(thumbnail.id);
+                deleteElementFromGallery(thumbnail.id); 
             } else if (response.status === 401) {
                 console.log("Authentication failed: Invalid token");
             } else {
@@ -85,7 +124,7 @@ async function handleDeleteImageEvent(buttonElement, thumbnail) {
             }
         })
         .catch(error => {
-            console.log("Error during DELTE request: ", error);
+            console.log("Error during DELETE request: ", error);
         });
     });
 
@@ -124,7 +163,7 @@ async function addCategoriesToSelectElement() {
         
         const selectOption = document.createElement("option");
         selectOption.value = category;
-        selectOption.innerText = category;
+        selectOption.innerHTML = "&nbsp;" + category;
         selectCategory.appendChild(selectOption);
     }
 }

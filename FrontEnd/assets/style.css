@@ -156,7 +156,7 @@ li:hover {
 .gallery {
 	width: 100%;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: repeat(3, 1fr);
 	grid-column-gap: 20px;
 	grid-row-gap: 20px;
 }
@@ -396,7 +396,7 @@ footer nav ul {
 .delete-gallery {
 	display: grid;
 	grid-template-columns: repeat(5, 1fr);
-	grid-template-rows: repeat(3, 1fr);
+	/* grid-template-rows: repeat(3, 1fr); */
 	grid-gap: 30px 5px;
 	margin-left: 60px;
 	margin-right: 60px;
@@ -452,7 +452,7 @@ footer nav ul {
 }
 
 /* input to choose photo */
-.add-photo-input-position {
+.add-photo-input {
 	opacity: 0.5;
 	position: absolute;
 	top: 95px;
@@ -496,4 +496,12 @@ footer nav ul {
 
 input[type="file"]{
 	display: none;
+}
+
+#title {
+	padding-left: 15px;
+}
+
+.option-style {
+	text-indent: 15px;
 }

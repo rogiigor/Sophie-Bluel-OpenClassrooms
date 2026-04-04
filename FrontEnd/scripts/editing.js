@@ -2,6 +2,7 @@ import { displayDeleteGallery, deleteDeleteGallery,
          handleButtonAddPhoto, handleCloseAddPhoto,
          handleGoBackAddPhoto
  } from "./modal.js";
+ import { handleChooseAndSubmitPhoto } from "./addImage.js";
 
 function setEditingMode() {
     const headerElement = document.querySelector("header");
@@ -79,6 +80,8 @@ function setEditingMode() {
          *   hide add photo modal
          */
         handleGoBackAddPhoto();
+
+        handleChooseAndSubmitPhoto();
     }
 }
 
