@@ -20,8 +20,7 @@ function generateWorks(works) {
         figureElement.id = "gal-" + works[i].id; 
         // Creation of tags
         const imageElement = document.createElement("img");
-        let localImage = getLocalImageFromImageUrl(figure.imageUrl);
-        imageElement.src = localImage;
+        imageElement.src = figure.imageUrl;
         imageElement.alt = figure.title;
         let figcaptionElement = document.createElement("figcaption");
         figcaptionElement.innerText = figure.title;
@@ -34,18 +33,6 @@ function generateWorks(works) {
 }
 
 /**
- * This function generates local imageUrl given HTTP Api Url
- * @param {string} imageUrl : Url of image from HTTP call
- */
-function getLocalImageFromImageUrl(imageUrl) {
-    let urlParts = imageUrl.split("/");
-    let imgFromDb = urlParts[urlParts.length - 1];
-    let imgName = imgFromDb.split(/\d/)[0];
-    let imgExtension = imgFromDb.split(".")[1];
-    return "assets/images/" + imgName + "." + imgExtension;
-}
-
-/**
  * This function renders all designer's works
  */
 async function renderDefaultAllWorks() {
@@ -55,4 +42,4 @@ async function renderDefaultAllWorks() {
     generateWorks(works);
 }
 
-export { renderDefaultAllWorks, generateWorks, getLocalImageFromImageUrl };
+export { renderDefaultAllWorks, generateWorks };

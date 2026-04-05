@@ -1,4 +1,3 @@
-import { getLocalImageFromImageUrl } from "./works.js";
 import { closeModal } from "./editing.js";
 
 async function displayDeleteGallery() {
@@ -77,9 +76,7 @@ async function generateDeleteGalley(works) {
         container.classList.add("thumbnail-container");
 
         const imgElement = document.createElement("img");
-        let localImage = getLocalImageFromImageUrl(thumbnail.imageUrl);
-        
-        imgElement.src = localImage;
+        imgElement.src = thumbnail.imageUrl;
         imgElement.alt = "Project";
         imgElement.classList.add("thumbnail-img");
         
