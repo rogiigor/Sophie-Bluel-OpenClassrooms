@@ -3,11 +3,11 @@ const customInput = document.querySelector(".add-photo-input");
 const confirmButton = document.querySelector(".btn-confirm");
 const formAddPhoto = document.querySelector("form.photo-details");
 const figure = document.querySelector(".choose-photo");
-const btnSubmitContainer = document.querySelector("#add-gallery-photo .btn-container");
 
-function handleChooseAndSubmitPhoto() {
+async function handleChooseAndSubmitPhoto() {
     let title;
     let category;
+    let categoryId;
     let file;
 
     customInput.addEventListener("click", () => {
@@ -22,7 +22,10 @@ function handleChooseAndSubmitPhoto() {
         } else if (target.tagName === 'INPUT' && target.id === "title") {
             title = target.value;
         } else if (target.tagName === 'SELECT') {
-            category = target.value;
+            category = target.value.trim();
+
+            const categoryOption = target.options[target.selectedIndex];
+            categoryId = Number(categoryOption.id.substring(4));
         }
 
         if(file && title && category) {
@@ -32,31 +35,39 @@ function handleChooseAndSubmitPhoto() {
 
     });
 
-    btnSubmitContainer.addEventListener("click", (event) => {
-        if (event.target.firstElementChild.disabled === true) {
-            console.log("Photo, Title and Category need to be completed");
-        }
-    })
-
-    submitChoosePhotoForm(formAddPhoto, file, title, category);
-}
-
-
-function submitChoosePhotoForm(formAddPhoto, file, title, category) {
-    formAddPhoto.addEventListener('submit', (event) => {
+    
+    formAddPhoto.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         // send img to backend
-        if (file) {
-            console.log("file: ", file);
+        if (file && title && category) {
             const formData = new FormData();
             formData.append('image', file, file.name);
             formData.append('title', title);
-            formData.append('category', category);
+            formData.append('category', categoryId);
+
+            const userToken = window.localStorage.getItem("token");
+            try {
+                const response = await fetch("http://localhost:5678/api/works", {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Authorization': `Bearer ${userToken}`
+                    }
+                });
+
+                if (response.ok) {
+                    console.log("Upload successful!")
+                }
+            } catch (error) {
+                console.error("Upload failed: ", error);
+            }
+           
         }
         
     });
 }
+
 
 function choosePhoto(file, target, figure) {
     file = target.files[0];

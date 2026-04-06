@@ -157,10 +157,12 @@ async function addCategoriesToSelectElement() {
 
     for (let i = 0; i < categories.length; i++) {
         let category = categories[i].name;
+        let categoryId = categories[i].id;
         
         const selectOption = document.createElement("option");
         selectOption.value = category;
         selectOption.innerHTML = "&nbsp;" + category;
+        selectOption.id = "ctg-" + categoryId;
         selectCategory.appendChild(selectOption);
     }
 }
