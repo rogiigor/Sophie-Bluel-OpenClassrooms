@@ -57,23 +57,33 @@ async function handleChooseAndSubmitPhoto() {
                 });
 
                 if (response.ok) {
-                    console.log("Upload successful!")
+                    console.log("Upload successful!");
+                    
+                    const result = await response.json();
+                    console.log(result.imageUrl);
+                    console.log(result);
 
                     // remove preview image
                     const previewImg = document.querySelector(".preview-img");
                     previewImg.remove();
 
-                    // show figure's children
+                    // show back figure's children
                    for (let child of figure.children) {
                         child.classList.remove("hidden");
                    }
 
-                    // put back form
+                    // put back form input and select fields
                     formAddPhoto.reset();
+
+                    // make confirm button disabled
+                    confirmButton.disabled = true;
+
+                    updateGalleryWithNewPhoto(result)
+
+                    updateDeleteGallery(result);
                 }
             } catch (error) {
                 console.error("Upload failed: ", error);
-
             }
            
         }
@@ -102,7 +112,6 @@ function choosePhoto(file, target, figure) {
         for (let child of figure.children) {
             child.classList.add("hidden");
         }
-
 
         figure.append(imagePreview);
 
@@ -141,6 +150,50 @@ function verifyFile(file) {
         return false;
     }
     return true;
+}
+
+function updateGalleryWithNewPhoto(result) {
+    // update works gallery
+    const divGallery = document.querySelector(".gallery");
+    // Creation of a tag dedicated to a piece of gallery
+    const figureElement = document.createElement("figure");
+    figureElement.id = "gal-" + result.id; 
+    // Creation of tags
+    const imageElement = document.createElement("img");
+    imageElement.src = result.imageUrl;
+    imageElement.alt = result.title;
+    const figcaptionElement = document.createElement("figcaption");
+    figcaptionElement.innerText = result.title;
+
+    // attach tags to Gallery div
+    divGallery.appendChild(figureElement);
+    figureElement.appendChild(imageElement);
+    figureElement.appendChild(figcaptionElement);
+}
+
+function updateDeleteGallery(result) {
+    const deleteGallery = document.querySelector(".delete-gallery");
+
+    const container = document.createElement("div");
+    container.classList.add("thumbnail-container");
+
+    const imgElement = document.createElement("img");
+    imgElement.src = result.imageUrl;
+    imgElement.alt = "Project";
+    imgElement.classList.add("thumbnail-img");
+        
+    const buttonElement = document.createElement("button");
+    buttonElement.classList.add("delete-btn");
+    buttonElement.id = "del-" + result.id;
+        
+    const trashIcon = document.createElement("i");
+    trashIcon.classList.add("fa-solid", "fa-trash-can");
+    buttonElement.appendChild(trashIcon);
+
+    container.appendChild(imgElement);
+    container.appendChild(buttonElement);
+    
+    deleteGallery.appendChild(container);
 }
 
 export { handleChooseAndSubmitPhoto };

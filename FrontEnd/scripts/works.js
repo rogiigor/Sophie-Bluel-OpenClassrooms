@@ -22,7 +22,7 @@ function generateWorks(works) {
    
         // Creation of a tag dedicated to a piece of gallery
         const figureElement = document.createElement("figure");
-        figureElement.id = "gal-" + works[i].id; 
+        figureElement.id = "gal-" + figure.id; 
         // Creation of tags
         const imageElement = document.createElement("img");
         imageElement.src = figure.imageUrl;
