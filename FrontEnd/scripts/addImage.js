@@ -3,6 +3,7 @@ const customInput = document.querySelector(".add-photo-input");
 const confirmButton = document.querySelector(".btn-confirm");
 const formAddPhoto = document.querySelector("form.photo-details");
 const figure = document.querySelector(".choose-photo");
+const MAX_FILE_SIZE = 4 * 1024 * 1024;
 
 async function handleChooseAndSubmitPhoto() {
     let title;
@@ -32,7 +33,6 @@ async function handleChooseAndSubmitPhoto() {
             // enable confirm button
             confirmButton.disabled = false;
         } 
-
     });
 
     
@@ -58,9 +58,22 @@ async function handleChooseAndSubmitPhoto() {
 
                 if (response.ok) {
                     console.log("Upload successful!")
+
+                    // remove preview image
+                    const previewImg = document.querySelector(".preview-img");
+                    previewImg.remove();
+
+                    // show figure's children
+                   for (let child of figure.children) {
+                        child.classList.remove("hidden");
+                   }
+
+                    // put back form
+                    formAddPhoto.reset();
                 }
             } catch (error) {
                 console.error("Upload failed: ", error);
+
             }
            
         }
@@ -72,6 +85,11 @@ async function handleChooseAndSubmitPhoto() {
 function choosePhoto(file, target, figure) {
     file = target.files[0];
     if (file) {
+        removeErrorMessage();
+        if (!verifyFile(file)) {
+            return;
+        }
+
         // Generate a temporary Blob URL
         const objectURL = URL.createObjectURL(file);
 
@@ -80,7 +98,12 @@ function choosePhoto(file, target, figure) {
         imagePreview.src = objectURL;
         imagePreview.classList.add("preview-img");
 
-        figure.innerHTML = "";
+        // hide elements inside figure
+        for (let child of figure.children) {
+            child.classList.add("hidden");
+        }
+
+
         figure.append(imagePreview);
 
         // Release memory once the image has loaded
@@ -89,6 +112,35 @@ function choosePhoto(file, target, figure) {
         };
     }
     return file;
+}
+
+function removeErrorMessage() {
+    const errorMessage = document.querySelector(".error-msg");
+    if (errorMessage) {
+        errorMessage.remove();
+    }
+}
+
+function displayErrorMsg(figure, errorMessage) {
+    const errorParagraph = document.createElement("h3");
+    errorParagraph.textContent = errorMessage;
+    errorParagraph.classList.add("error-msg");
+
+    figure.parentElement.appendChild(errorParagraph);
+}
+
+function verifyFile(file) {
+    const extension = file.name.split('.').pop().toLowerCase();
+    if (file.size > MAX_FILE_SIZE) {
+        const errorMessage ="File size is too big. Please choose file < 4MB";
+        displayErrorMsg(figure, errorMessage);
+        return false;
+    } else if (extension !== 'jpg' && extension !== 'png') {
+        const errorMessage =`File has ${extension} extension. Please choose png or jpg`;
+        displayErrorMsg(figure, errorMessage);
+        return false;
+    }
+    return true;
 }
 
 export { handleChooseAndSubmitPhoto };

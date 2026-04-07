@@ -12,8 +12,13 @@ function generateWorks(works) {
     // Retrieving the DOM element that will host the records
     const divGallery = document.querySelector(".gallery");
 
+    const titleSet = new Set();
     for (let i = 0; i < works.length; i++) {
         const figure = works[i];
+        if (titleSet.has(figure.title)) {
+            continue;
+        }
+        titleSet.add(figure.title);
    
         // Creation of a tag dedicated to a piece of gallery
         const figureElement = document.createElement("figure");

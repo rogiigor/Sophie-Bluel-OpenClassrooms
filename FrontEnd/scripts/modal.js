@@ -61,8 +61,13 @@ async function generateDeleteGalley(works) {
     const deleteGallery = document.createElement("div");
     deleteGallery.classList.add("delete-gallery");
 
+    const titleModalSet = new Set();
     for (let i = 0; i < works.length; i++ ) {
         const thumbnail = works[i];
+        if (titleModalSet.has(thumbnail.title)) {
+            continue;
+        }
+        titleModalSet.add(thumbnail.title);
 
         /*
         <div class="thumbnail-container">
