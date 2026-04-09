@@ -86,57 +86,29 @@ function addEventListenerToFilterSection(section, works) {
  * @returns 
  */
 function trackElements(works) {
-    
-    let previousTarget = null;
-    let currentTarget = null;
-
-    // closure
     return (event) => {
         if (event.target.nodeName === 'BUTTON') {
+            // Filter works based on clicked button (id)
             const categoryId = parseInt(event.target.id);
 
-            let filteredWorks = [...works];
+            // Filter works based on selected category
+            let filteredWorks = works;
             if (categoryId !== 0) {
-                filteredWorks = works.filter((work) => {
-                    return work.category.id === categoryId;
-                })
+                filteredWorks = works.filter((work) => work.category.id === categoryId)
             }
 
-            let uniqueWorksSet = new Set();
-            filteredWorks.forEach(work => uniqueWorksSet.add(work));
-            const uniqueWorks = [...uniqueWorksSet];
-
             document.querySelector(".gallery").innerHTML = "";
-            generateWorks(uniqueWorks);
+            generateWorks(filteredWorks);
 
-            ({ previousTraget: previousTarget, currentTarget } = setClickedClass(previousTarget, currentTarget, event));
+            // Management of "clicked" classes
+            const previousTarget = document.querySelector(".clicked");
+            if (previousTarget) {
+                previousTarget.classList.remove("clicked");
+            }
+            event.target.classList.add("clicked");
         }
         
     };
 };
-
-
-/**
- * This function sets clicked class depending on previous or current target and event
- * @param {*} previousTarget 
- * @param {*} currentTarget 
- * @param {*} event 
- * @returns 
- */
-function setClickedClass(previousTarget, currentTarget, event) {
-    previousTarget = currentTarget;
-    currentTarget = event.target;
-
-    // set clicked class to clicked button
-    if (previousTarget !== null) {
-        previousTarget.classList.remove("clicked");
-    } else {
-        // button All is clicked by default
-        const allButton = document.querySelector(".btn-all");
-        allButton.classList.remove("clicked");
-    }
-    currentTarget.classList.add("clicked");
-    return { previousTarget: previousTarget, currentTarget };
-}
 
 export { renderButtons };
