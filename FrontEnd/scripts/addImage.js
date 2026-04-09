@@ -90,7 +90,19 @@ async function handleChooseAndSubmitPhoto() {
                 console.error("Upload failed: ", error);
             }
            
-        }
+        } else if (file && !title && !category) {
+            removeErrorMessage();
+            const errorMessage ="Title and category cannot be empty";
+            displayErrorMsg(figure, errorMessage);
+        } else if (file && !title) {
+            removeErrorMessage();
+            const errorMessage ="Title input cannot be empty. Please fill it up";
+            displayErrorMsg(figure, errorMessage);
+        } else if (file && !category) {
+            removeErrorMessage();
+            const errorMessage ="Category cannot be blank. Please choose category";
+            displayErrorMsg(figure, errorMessage);
+        } 
         
     });
 }
