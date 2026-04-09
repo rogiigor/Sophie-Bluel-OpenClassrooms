@@ -3,6 +3,7 @@ const customInput = document.querySelector(".add-photo-input");
 const confirmButton = document.querySelector(".btn-confirm");
 const formAddPhoto = document.querySelector("form.photo-details");
 const figure = document.querySelector(".choose-photo");
+const titleInput = document.getElementById("title");
 const MAX_FILE_SIZE = 4 * 1024 * 1024;
 
 async function handleChooseAndSubmitPhoto() {
@@ -35,6 +36,11 @@ async function handleChooseAndSubmitPhoto() {
         } 
     });
 
+    titleInput.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter') {
+            event.preventDefault();
+        }
+    });
     
     formAddPhoto.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -78,9 +84,7 @@ async function handleChooseAndSubmitPhoto() {
                     // make confirm button disabled
                     confirmButton.disabled = true;
 
-                    updateGalleryWithNewPhoto(result)
-
-                    updateDeleteGallery(result);
+                    updateGalleriesWithNewImage(result);
                 }
             } catch (error) {
                 console.error("Upload failed: ", error);
@@ -152,48 +156,28 @@ function verifyFile(file) {
     return true;
 }
 
-function updateGalleryWithNewPhoto(result) {
+function updateGalleriesWithNewImage(result) {
     // update works gallery
     const divGallery = document.querySelector(".gallery");
-    // Creation of a tag dedicated to a piece of gallery
-    const figureElement = document.createElement("figure");
-    figureElement.id = "gal-" + result.id; 
-    // Creation of tags
-    const imageElement = document.createElement("img");
-    imageElement.src = result.imageUrl;
-    imageElement.alt = result.title;
-    const figcaptionElement = document.createElement("figcaption");
-    figcaptionElement.innerText = result.title;
 
-    // attach tags to Gallery div
-    divGallery.appendChild(figureElement);
-    figureElement.appendChild(imageElement);
-    figureElement.appendChild(figcaptionElement);
-}
+    const figureElement =
+    `<figure id=${result.id}>
+        <img src=${result.imageUrl} alt=${result.title}>
+        <figcaption>${result.title}</figcaption>
+    </figure>`;
+    divGallery.insertAdjacentHTML('beforeend', figureElement);
 
-function updateDeleteGallery(result) {
+    // update delete gallery
     const deleteGallery = document.querySelector(".delete-gallery");
 
-    const container = document.createElement("div");
-    container.classList.add("thumbnail-container");
-
-    const imgElement = document.createElement("img");
-    imgElement.src = result.imageUrl;
-    imgElement.alt = "Project";
-    imgElement.classList.add("thumbnail-img");
-        
-    const buttonElement = document.createElement("button");
-    buttonElement.classList.add("delete-btn");
-    buttonElement.id = "del-" + result.id;
-        
-    const trashIcon = document.createElement("i");
-    trashIcon.classList.add("fa-solid", "fa-trash-can");
-    buttonElement.appendChild(trashIcon);
-
-    container.appendChild(imgElement);
-    container.appendChild(buttonElement);
-    
-    deleteGallery.appendChild(container);
+    const thumbnailElement =
+    `<div class="thumbnail-container">
+        <img src=${result.imageUrl} alt="Projects" class="thumbnail-img">
+        <button class="delete-btn" id="del-${result.id}">
+            <i class="fa-solid fa-trash-can"></i>
+        </button>
+    </div>`;
+    deleteGallery.insertAdjacentHTML('beforeend', thumbnailElement);    
 }
 
 export { handleChooseAndSubmitPhoto };

@@ -37,12 +37,12 @@ function generateButtons(categories, works) {
         filtersSection.appendChild(filterButton);
     }
 
-    addEventListenerToFilterSection(filtersSection, works);
+    filtersSection.addEventListener("click", trackElements(works));
 }
 
 /**
  * This function creates class from category name
- * @param {string} categories : catgory
+ * @param {string} categories : category
  */
 function createClassNameFromCategory(category) {
     const words = category.split(" ");
@@ -69,14 +69,6 @@ async function renderButtons() {
     const worksResponse = await fetch("http://localhost:5678/api/works");
     const works = await worksResponse.json();
     generateButtons(categories, works);
-}
-
-/**
- * This function adds eventListener to button
- * @param {Node} section: Node element for section that is parent of button
- */
-function addEventListenerToFilterSection(section, works) {
-    section.addEventListener("click", trackElements(works))
 }
 
 /**

@@ -86,44 +86,27 @@ function setEditingMode() {
 }
 
 function createEditHeader() {
-    /* 
-    <div class="edit-header">
+    const editHeader =
+    `<div class="edit-header">
         <i class="far fa-edit"></i>
         <p>Editing Mode</p>
-    </div>
-    */
-    const divElement = document.createElement("div");
-    divElement.classList.add("edit-header");
-    const iconElement = document.createElement("i");
-    iconElement.classList.add("far", "fa-edit");
-    const paragraphElement = document.createElement("p");
-    paragraphElement.textContent = "Editing Mode";
-
-    divElement.appendChild(iconElement);
-    divElement.appendChild(paragraphElement);
-    return divElement;
+    </div>`;
+    return createElementFromHTML(editHeader);
 }
 
 function createEditButton() {
-    /*
-    <div class="edit-div">
+    const editButton =
+    `<div class="edit-div">
         <i class="far fa-edit icon-edit"></i>
         <btn-edit class="btn-edit">Edit</btn-edit>
-    </div>
-    */
-    const divElement = document.createElement("div");
-    divElement.classList.add("edit-div");
-    const iconElement = document.createElement("i");
-    iconElement.classList.add("far", "fa-edit", "icon-edit");
-    const button = document.createElement("button");
+    </div>`;
+    return createElementFromHTML(editButton);
+}
 
-    button.classList.add("btn-edit");
-    button.innerText = "Edit";
-
-    divElement.appendChild(iconElement);
-    divElement.appendChild(button);
-
-    return divElement;
+function createElementFromHTML(htmlString) {
+  const template = document.createElement('template');
+  template.innerHTML = htmlString.trim();
+  return template.content.firstElementChild;
 }
 
 function handleLoginLink() {
@@ -203,4 +186,4 @@ function addCloseModalGallery() {
     
 }
 
-export { setEditingMode, addCloseModalGallery, closeModal };
+export { setEditingMode, addCloseModalGallery, closeModal, createElementFromHTML };

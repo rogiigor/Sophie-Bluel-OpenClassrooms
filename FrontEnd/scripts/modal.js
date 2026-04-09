@@ -121,11 +121,13 @@ function handleButtonAddPhoto() {
 }
 
 async function addCategoriesToSelectElement() {
+    const selectCategory = document.getElementById("category-select");
+    if (selectCategory.children.length > 0) return;
+
     // Retrieve category of works via HTTP request and convert it to JSON
     const categoriesResponse = await fetch("http://localhost:5678/api/categories");
     const categories = await categoriesResponse.json();
 
-    const selectCategory = document.getElementById("category-select");
     // create default option
     const selectOption = document.createElement("option");
     selectOption.value = "";

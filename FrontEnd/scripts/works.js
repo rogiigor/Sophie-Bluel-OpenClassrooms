@@ -1,3 +1,4 @@
+import { createElementFromHTML } from "./editing.js";
 /*********************************************************************************
  * 
  * This file contains all functions necessary to render Sophie Bluel works page. 
@@ -20,20 +21,15 @@ function generateWorks(works) {
         }
         titleSet.add(figure.title);
    
-        // Creation of a tag dedicated to a piece of gallery
-        const figureElement = document.createElement("figure");
-        figureElement.id = "gal-" + figure.id; 
-        // Creation of tags
-        const imageElement = document.createElement("img");
-        imageElement.src = figure.imageUrl;
-        imageElement.alt = figure.title;
-        let figcaptionElement = document.createElement("figcaption");
-        figcaptionElement.innerText = figure.title;
+        const figureElementString =
+        `<figure id="gal-${figure.id}">
+            <img src=${figure.imageUrl} alt=${figure.title}>
+            <figcaption>${figure.title}</figcaption>
+        </figure>`;
+        const figureElement = createElementFromHTML(figureElementString);;
 
         // attach tags to Gallery div
         divGallery.appendChild(figureElement);
-        figureElement.appendChild(imageElement);
-        figureElement.appendChild(figcaptionElement);
     }
 }
 
