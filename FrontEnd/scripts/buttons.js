@@ -23,7 +23,6 @@ function generateButtons(categories, works) {
     buttonAll.id = 0;
 
     filtersSection.appendChild(buttonAll);
-    addEventListenerToFilterSection(filtersSection, works);
 
     for (let i = 0; i < categories.length; i++) {
         let btnCategory = categories[i].name;
@@ -36,8 +35,9 @@ function generateButtons(categories, works) {
         filterButton.classList.add(classBtnCategory);
         filterButton.id = btnId;
         filtersSection.appendChild(filterButton);
-        addEventListenerToFilterSection(filtersSection, works);
     }
+
+    addEventListenerToFilterSection(filtersSection, works);
 }
 
 /**
