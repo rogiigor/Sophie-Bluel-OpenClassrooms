@@ -17,42 +17,13 @@ function deleteDeleteGallery() {
 }
 
 function deleteElementFromDeleteGallery(id) {
-    // get delete gallery
-    const modalGalleryTitle = document.querySelector(".modal-gallery h2");
-    const deleteGallery = modalGalleryTitle.nextElementSibling;
-
-    for (let i = 0; i < deleteGallery.childElementCount; i++) {
-        const thumbnailDivElement = deleteGallery.children[i];
-        thumbnailDivElement.childNodes.forEach(node => {
-            if (node.tagName === 'BUTTON' && Number(node.id.substring(4)) === id) {
-                // found match
-                console.log(node);
-                if (node.parentElement.previousSibling !== null) {
-                    node.parentElement.previousSibling.nextSibling.remove();
-                } else {
-                    // first element
-                    node.parentElement.parentElement.parentElement.removeChild();
-                }
-            }
-        });
-    }
+    const delThumbnailContainer = document.getElementById("del-" + id).parentElement;
+    delThumbnailContainer.remove();
 }
 
 function deleteElementFromGallery(id) {
-    // get gallery
-    const gallery = document.querySelector(".gallery");
-    gallery.childNodes.forEach(node => {
-        if (node.tagName === 'FIGURE' && Number(node.id.substring(4)) === id) {
-            // found match
-            if (node.previousSibling === null) {
-                // first element
-                node.parentElement.removeChild();
-            } else {
-                node.previousSibling.nextSibling.remove();
-            }
-        }
-    });
-
+    const delFigure = document.getElementById("gal-" + id);
+    delFigure.remove();
 }
 
 async function generateDeleteGalley(works) {
