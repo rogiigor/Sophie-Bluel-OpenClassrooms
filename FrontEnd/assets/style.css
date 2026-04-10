@@ -517,3 +517,10 @@ input[type="file"]{
 	height: 240px;
 	width: 184px;
 }
+
+@media  screen and (height < 1080px) {
+	.modal-box {
+		max-height: calc(100vh - 40vh);
+		overflow-y: auto;
+	}
+}

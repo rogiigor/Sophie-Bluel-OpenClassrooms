@@ -1,4 +1,5 @@
 import { closeModal } from "./editing.js";
+import { removeErrorMessage } from "./addImage.js";
 
 async function displayDeleteGallery() {
     // Retrieve gallery works via HTTP request and convert it to JSON
@@ -117,6 +118,11 @@ function handleButtonAddPhoto() {
         // disable confirm button
         const confirmButton = document.querySelector(".btn-confirm");
         confirmButton.disabled = true;
+        // reset form
+        const formAddPhoto = document.querySelector("form.photo-details");
+        formAddPhoto.reset();
+        // remove any error messages in the form
+        removeErrorMessage();
     });
 }
 

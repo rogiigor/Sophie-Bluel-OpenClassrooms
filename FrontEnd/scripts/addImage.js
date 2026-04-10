@@ -192,4 +192,4 @@ function updateGalleriesWithNewImage(result) {
     deleteGallery.insertAdjacentHTML('beforeend', thumbnailElement);    
 }
 
-export { handleChooseAndSubmitPhoto };
+export { handleChooseAndSubmitPhoto, removeErrorMessage };
