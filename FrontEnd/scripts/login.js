@@ -1,5 +1,11 @@
 import {API_URL } from './config.js'
-// login form treatment
+
+/*********************************************************************************
+ * 
+ * This file contains all functions necessary to login for admin person. 
+ * 
+ *********************************************************************************/
+
 const loginForm = document.querySelector(".login-form");
 
 loginForm.addEventListener("submit", async (event) => {

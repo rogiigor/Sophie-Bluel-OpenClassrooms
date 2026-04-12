@@ -2,6 +2,12 @@ import { closeModal } from "./editing.js";
 import { removeErrorMessage } from "./addImage.js";
 import { API_URL } from './config.js';
 
+/*********************************************************************************
+ * 
+ * This file contains all functions necessary to render modal. 
+ * 
+ *********************************************************************************/
+
 async function displayDeleteGallery() {
     // Retrieve gallery works via HTTP request and convert it to JSON
     const response = await fetch(`${API_URL}/works`);

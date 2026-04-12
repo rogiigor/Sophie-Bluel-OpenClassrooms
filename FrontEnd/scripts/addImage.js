@@ -1,5 +1,11 @@
 import { API_URL } from './config.js';
 
+/*********************************************************************************
+ * 
+ * This file contains all functions necessary add image to Sophie Bluel works page. 
+ * 
+ *********************************************************************************/
+
 const realFileInput = document.getElementById("real-file");
 const customInput = document.querySelector(".add-photo-input");
 const confirmButton = document.querySelector(".btn-confirm");

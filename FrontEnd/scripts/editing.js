@@ -4,6 +4,12 @@ import { displayDeleteGallery, deleteDeleteGallery,
  } from "./modal.js";
  import { handleChooseAndSubmitPhoto } from "./addImage.js";
 
+ /*********************************************************************************
+ * 
+ * This file contains all functions related to editing mode. 
+ * 
+ *********************************************************************************/
+
 function setEditingMode() {
     const headerElement = document.querySelector("header");
     const projectsTitleElement = document.querySelector("#portfolio h2");
