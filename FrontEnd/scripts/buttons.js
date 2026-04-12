@@ -1,4 +1,5 @@
 import { generateWorks } from "./works.js";
+import { API_URL } from './config.js';
 
 /*********************************************************************************
  * 
@@ -62,11 +63,11 @@ function createClassNameFromCategory(category) {
  */
 async function renderButtons() {
     // Retrieve category of works via HTTP request and convert it to JSON
-    const categoriesResponse = await fetch("http://localhost:5678/api/categories");
+    const categoriesResponse = await fetch(`${API_URL}/categories`);
     const categories = await categoriesResponse.json();
 
     // get all works
-    const worksResponse = await fetch("http://localhost:5678/api/works");
+    const worksResponse = await fetch(`${API_URL}/works`);
     const works = await worksResponse.json();
     generateButtons(categories, works);
 }

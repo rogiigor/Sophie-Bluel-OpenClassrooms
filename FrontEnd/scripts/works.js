@@ -1,4 +1,5 @@
-import { createElementFromHTML } from "./editing.js";
+import { API_URL } from './config.js';
+
 /*********************************************************************************
  * 
  * This file contains all functions necessary to render Sophie Bluel works page. 
@@ -21,15 +22,24 @@ function generateWorks(works) {
         }
         titleSet.add(figure.title);
    
-        const figureElementString =
-        `<figure id="gal-${figure.id}">
-            <img src=${figure.imageUrl} alt=${figure.title}>
-            <figcaption>${figure.title}</figcaption>
-        </figure>`;
-        const figureElement = createElementFromHTML(figureElementString);;
-
+        /** Creation of a tag dedicated to a piece of gallery
+         <figure id="gal-${figure.id}">
+             <img src=${figure.imageUrl} alt=${figure.title}>
+             <figcaption>${figure.title}</figcaption>
+         </figure> 
+         */
+        const figureElement = document.createElement("figure");
+        figureElement.id = "gal-" + figure.id; 
+        // Creation of tags
+        const imageElement = document.createElement("img");
+        imageElement.src = figure.imageUrl;
+        imageElement.alt = figure.title;
+        let figcaptionElement = document.createElement("figcaption");
+        figcaptionElement.innerText = figure.title;
         // attach tags to Gallery div
         divGallery.appendChild(figureElement);
+        figureElement.appendChild(imageElement);
+        figureElement.appendChild(figcaptionElement);
     }
 }
 
@@ -38,7 +48,7 @@ function generateWorks(works) {
  */
 async function renderDefaultAllWorks() {
     // Retrieve gallery works via HTTP request and convert it to JSON
-    const response = await fetch("http://localhost:5678/api/works");
+    const response = await fetch(`${API_URL}/works`);
     const works = await response.json();
     generateWorks(works);
 }

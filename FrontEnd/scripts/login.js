@@ -1,3 +1,4 @@
+import {API_URL } from './config.js'
 // login form treatment
 const loginForm = document.querySelector(".login-form");
 
@@ -13,7 +14,7 @@ loginForm.addEventListener("submit", async (event) => {
     };
     const payload = JSON.stringify(requestBody);
 
-    const response = await fetch("http://localhost:5678/api/users/login", {
+    const response = await fetch(`${API_URL}/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json"},
         body: payload

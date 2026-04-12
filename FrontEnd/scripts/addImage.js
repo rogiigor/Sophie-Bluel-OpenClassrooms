@@ -1,3 +1,5 @@
+import { API_URL } from './config.js';
+
 const realFileInput = document.getElementById("real-file");
 const customInput = document.querySelector(".add-photo-input");
 const confirmButton = document.querySelector(".btn-confirm");
@@ -54,7 +56,7 @@ async function handleChooseAndSubmitPhoto() {
 
             const userToken = window.localStorage.getItem("token");
             try {
-                const response = await fetch("http://localhost:5678/api/works", {
+                const response = await fetch(`${API_URL}/works`, {
                     method: 'POST',
                     body: formData,
                     headers: {
@@ -83,6 +85,9 @@ async function handleChooseAndSubmitPhoto() {
 
                     // make confirm button disabled
                     confirmButton.disabled = true;
+
+                    // remove error message
+                    removeErrorMessage();
 
                     updateGalleriesWithNewImage(result);
                 }

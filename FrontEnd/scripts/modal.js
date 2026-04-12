@@ -1,9 +1,10 @@
 import { closeModal } from "./editing.js";
 import { removeErrorMessage } from "./addImage.js";
+import { API_URL } from './config.js';
 
 async function displayDeleteGallery() {
     // Retrieve gallery works via HTTP request and convert it to JSON
-    const response = await fetch("http://localhost:5678/api/works");
+    const response = await fetch(`${API_URL}/works`);
     const works = await response.json();
     generateDeleteGalley(works);
 }
@@ -80,7 +81,7 @@ async function handleDeleteImageEvent(buttonElement, thumbnail) {
     const userToken = window.localStorage.getItem("token");
     buttonElement.addEventListener("click", () => {
             console.log("image with id " + thumbnail.id + " was clicked");
-            fetch("http://localhost:5678/api/works/" + thumbnail.id, {
+            fetch(`${API_URL}/works/${thumbnail.id}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${userToken}`
@@ -131,7 +132,7 @@ async function addCategoriesToSelectElement() {
     if (selectCategory.children.length > 0) return;
 
     // Retrieve category of works via HTTP request and convert it to JSON
-    const categoriesResponse = await fetch("http://localhost:5678/api/categories");
+    const categoriesResponse = await fetch(`${API_URL}/categories` );
     const categories = await categoriesResponse.json();
 
     // create default option
