@@ -70,12 +70,8 @@ async function handleChooseAndSubmitPhoto() {
                     }
                 });
 
-                if (response.ok) {
-                    console.log("Upload successful!");
-                    
+                if (response.ok) {                    
                     const result = await response.json();
-                    console.log(result.imageUrl);
-                    console.log(result);
 
                     // remove preview image
                     const previewImg = document.querySelector(".preview-img");
@@ -98,7 +94,8 @@ async function handleChooseAndSubmitPhoto() {
                     updateGalleriesWithNewImage(result);
                 }
             } catch (error) {
-                console.error("Upload failed: ", error);
+                const errorMessage ="Failed to add image";
+                displayErrorMsg(figure, errorMessage);
             }
            
         } else if (file && !title && !category) {
