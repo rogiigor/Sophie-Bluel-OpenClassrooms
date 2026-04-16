@@ -180,24 +180,57 @@ function updateGalleriesWithNewImage(result) {
     // update works gallery
     const divGallery = document.querySelector(".gallery");
 
-    const figureElement =
-    `<figure id=${result.id}>
-        <img src=${result.imageUrl} alt=${result.title}>
-        <figcaption>${result.title}</figcaption>
-    </figure>`;
-    divGallery.insertAdjacentHTML('beforeend', figureElement);
+    // <figure id=${result.id}>
+    //     <img src=${result.imageUrl} alt=${result.title}>
+    //     <figcaption>${result.title}</figcaption>
+    // </figure>
+
+    // Creation of a tag dedicated to a piece of gallery
+    const figureElement = document.createElement("figure");
+    figureElement.id = "gal-" + result.id; 
+    // Creation of tags
+    const imageElement = document.createElement("img");
+    imageElement.src = result.imageUrl;
+    imageElement.alt = result.title;
+    const figcaptionElement = document.createElement("figcaption");
+    figcaptionElement.innerText = result.title;
+
+    // attach tags to Gallery div
+    divGallery.appendChild(figureElement);
+    figureElement.appendChild(imageElement);
+    figureElement.appendChild(figcaptionElement);
 
     // update delete gallery
     const deleteGallery = document.querySelector(".delete-gallery");
 
-    const thumbnailElement =
-    `<div class="thumbnail-container">
-        <img src=${result.imageUrl} alt="Projects" class="thumbnail-img">
-        <button class="delete-btn" id="del-${result.id}">
-            <i class="fa-solid fa-trash-can"></i>
-        </button>
-    </div>`;
-    deleteGallery.insertAdjacentHTML('beforeend', thumbnailElement);    
+    // <div class="thumbnail-container">
+    //     <img src=${result.imageUrl} alt="Projects" class="thumbnail-img">
+    //     <button class="delete-btn" id="del-${result.id}">
+    //         <i class="fa-solid fa-trash-can"></i>
+    //     </button>
+    // </div>
+
+    const container = document.createElement("div");
+    container.classList.add("thumbnail-container");
+
+    const imgElement = document.createElement("img");
+    imgElement.src = result.imageUrl;
+    imgElement.alt = "Project";
+    imgElement.classList.add("thumbnail-img");
+        
+    const buttonElement = document.createElement("button");
+    buttonElement.classList.add("delete-btn");
+    buttonElement.id = "del-" + result.id;
+        
+    const trashIcon = document.createElement("i");
+    trashIcon.classList.add("fa-solid", "fa-trash-can");
+    buttonElement.appendChild(trashIcon);
+
+    container.appendChild(imgElement);
+    container.appendChild(buttonElement);
+    
+    deleteGallery.appendChild(container);
+  
 }
 
 export { handleChooseAndSubmitPhoto, removeErrorMessage };
